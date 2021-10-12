@@ -21,7 +21,7 @@ and open the template in the editor.
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
 
-        function getRandomPassword($passLen = 8) {
+        function getRandomPassword($passLen = 12) {
             $symbols = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%&?';
             $pass = '';
             $alphaLength = strlen($symbols) - 1;
