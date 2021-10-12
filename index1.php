@@ -22,13 +22,17 @@ and open the template in the editor.
         ini_set('display_startup_errors', 1);
 
         function getRandomPassword($passLen = 12) {
-            $symbols = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%&?';
+            $symbols = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&?';
+            $numbers = '1234567890';
             $pass = '';
-            $alphaLength = strlen($symbols) - 1;
+            $symLength = strlen($symbols) - 1;
+            $numLength = strlen($numbers) - 1;
             for ($i = 0; $i < $passLen; $i++) {
-                $n = rand(0, $alphaLength);
-                $pass = $pass . $symbols[$n];
+                $n_s = rand(0, $symLength);
+                $pass = $pass . $symbols[$n_s];
             }
+            $n_n = rand(0, $numLength);
+            $pass = $pass . $numbers[$n_n];
             return $pass;
         }
 
