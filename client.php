@@ -41,7 +41,8 @@ $functionname = 'core_user_create_users';
 $user_email = 'alef-photoamator@yandex.ru';
 
 // REST RETURNED VALUES FORMAT
-$restformat = 'xml'; //Also possible in Moodle 2.2 and later: 'json'
+$restformat = 'json'; //Also possible in Moodle 2.2 and later: 'json'
+//$restformat = 'xml'; //Also possible in Moodle 2.2 and later: 'json'
 //Setting it to 'json' will fail all calls on earlier Moodle version
 //////// moodle_user_create_users ////////
 /// PARAMETERS - NEED TO BE CHANGED IF YOU CALL A DIFFERENT FUNCTION
@@ -59,7 +60,7 @@ $user1->timezone = 'Europe/Moscow';
 //        $user1->mailformat = 0;
 $user1->description = 'Автогенерация';
 $user1->city = 'Кемерово';
-$user1->country = 'Ru';
+$user1->country = 'RU';
 //        $preferencename1 = 'preference1';
 //        $preferencename2 = 'preference2';
 $user1->preferences = array(array('type' => 'auth_forcepasswordchange', 'value' => true));
@@ -67,7 +68,7 @@ $users = array($user1);
 $params = array('users' => $users);
 
 /// REST CALL
-header('Content-Type: text/plain');
+//header('Content-Type: text/plain');
 $serverurl = $domainname . '/webservice/rest/server.php'
         . '?wstoken=' . $token
         . '&wsfunction=' . $functionname;
@@ -76,6 +77,8 @@ $curl = new curl;
 //if rest format == 'xml', then we do not add the param for backward compatibility with Moodle < 2.2
 $restformat = ($restformat == 'json') ? '&moodlewsrestformat=' . $restformat : '';
 $resp = $curl->post($serverurl . $restformat, $params);
-print_r($resp);
-print_r($user1->password);
+$resp_decode = json_decode($resp, false);
+print_r("<p>".$resp_decode->errorcode);
+print_r("<p>".$resp_decode->message);
+print_r("<p>".$user1->password);
 ?>
