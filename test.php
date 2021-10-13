@@ -26,10 +26,15 @@ and open the template in the editor.
         $users[] = new Users;
         $users[0]->name = "Александр";
         $users[1]->name = "Helga";
+
+        //$filename = "c:/Users/a.andreev/bin/Apache24/moodledata/test.txt";
+        $filename = "/moodledata/test.txt";
+        $f = fopen("/moodledata/yes.txt", 'w+');
         ?>
-        <p><?= count($users) ?>
-            <?php for ($i = 0; $i < count($users); $i++): ?>
-            <p><?= $users[$i]->name ?>
-            <?php endfor; ?>
+        <p><?= count($users) ?></p>
+        <?php for ($i = 0; $i < count($users); $i++): ?>
+            <p><?= $users[$i]->name ?></p>
+        <?php endfor; ?>
+        <p><?= file($filename)[0] ?></p>
     </body>
 </html>
