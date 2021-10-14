@@ -30,7 +30,8 @@ function getRandomPassword($passLen = 12) {
 $token = '7438c75e1f45e84c34b6fbc52c39ac83';
 $domainname = 'http://127.0.0.1/moodle';
 $functionname = 'core_user_create_users';
-$user_email = 'alef-photoamator@yandex.ru';
+$user_email[0] = 'alef-photoamator@yandex.ru';
+$user_email[1] = 'alef-photoamator@ya.ru';
 
 // REST RETURNED VALUES FORMAT
 $restformat = 'json'; //Also possible in Moodle 2.2 and later: 'json'
@@ -38,19 +39,31 @@ $restformat = 'json'; //Also possible in Moodle 2.2 and later: 'json'
 //Setting it to 'json' will fail all calls on earlier Moodle version
 //////// moodle_user_create_users ////////
 /// PARAMETERS - NEED TO BE CHANGED IF YOU CALL A DIFFERENT FUNCTION
-$user1 = new stdClass();
-$user1->username = strtolower($user_email);
-$user1->password = getRandomPassword();
-$user1->firstname = 'Александр';
-$user1->lastname = 'Андреев';
-$user1->email = strtolower($user_email);
-$user1->auth = 'manual';
-$user1->timezone = 'Europe/Moscow';
-$user1->description = 'Автогенерация';
-$user1->city = 'Кемерово';
-$user1->country = 'RU';
-$user1->preferences = array(array('type' => 'auth_forcepasswordchange', 'value' => true));
-$users = array($user1);
+$user[] = new stdClass();
+$user[0]->username = strtolower($user_email[0]);
+$user[0]->password = getRandomPassword();
+$user[0]->firstname = 'Александр';
+$user[0]->lastname = 'Андреев';
+$user[0]->email = strtolower($user_email[0]);
+$user[0]->auth = 'manual';
+$user[0]->timezone = 'Europe/Moscow';
+$user[0]->description = 'Автогенерация';
+$user[0]->city = 'Кемерово';
+$user[0]->country = 'RU';
+$user[0]->preferences = array(array('type' => 'auth_forcepasswordchange', 'value' => true));
+//*****************
+$user[1]->username = strtolower($user_email[1]);
+$user[1]->password = getRandomPassword();
+$user[1]->firstname = 'Александр';
+$user[1]->lastname = 'Андреев';
+$user[1]->email = strtolower($user_email[1]);
+$user[1]->auth = 'manual';
+$user[1]->timezone = 'Europe/Moscow';
+$user[1]->description = 'Автогенерация';
+$user[1]->city = 'Кемерово';
+$user[1]->country = 'RU';
+$user[1]->preferences = array(array('type' => 'auth_forcepasswordchange', 'value' => true));
+$users = $user;
 $params = array('users' => $users);
 
 /// REST CALL
@@ -66,5 +79,5 @@ $resp = $curl->post($serverurl . $restformat, $params);
 $resp_decode = json_decode($resp, false);
 print_r("<p>".$resp_decode->errorcode);
 print_r("<p>".$resp_decode->message);
-print_r("<p>".$user1->password);
+print_r("<p>".$user[0]->password);
 ?>

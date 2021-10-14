@@ -30,27 +30,28 @@ function getRandomPassword($passLen = 12) {
 $token = '59461ad0198c3d6702ed179ef54bbf45';
 $domainname = 'https://telemed.alfand.ru/moodle';
 $functionname = 'core_user_create_users';
-$user_email = 'alef-photoamator@yandex.ru';
+//$functionname = 'auth_email_signup_user';
+$user_email = 'alef-alef-photoamator@yandex.ru';
 
 // REST RETURNED VALUES FORMAT
-$restformat = 'json'; //Also possible in Moodle 2.2 and later: 'json'
-//$restformat = 'xml'; //Also possible in Moodle 2.2 and later: 'json'
+//$restformat = 'json'; //Also possible in Moodle 2.2 and later: 'json'
+$restformat = 'xml'; //Also possible in Moodle 2.2 and later: 'json'
 //Setting it to 'json' will fail all calls on earlier Moodle version
 //////// moodle_user_create_users ////////
 /// PARAMETERS - NEED TO BE CHANGED IF YOU CALL A DIFFERENT FUNCTION
-$user1 = new stdClass();
-$user1->username = strtolower($user_email);
-$user1->password = getRandomPassword();
-$user1->firstname = 'Александр';
-$user1->lastname = 'Андреев';
-$user1->email = strtolower($user_email);
-$user1->auth = 'manual';
-$user1->timezone = 'Europe/Moscow';
-$user1->description = 'Автогенерация';
-$user1->city = 'Кемерово';
-$user1->country = 'RU';
-$user1->preferences = array(array('type' => 'auth_forcepasswordchange', 'value' => true));
-$users = array($user1);
+$user[0] = new stdClass();
+$user[0]->username = strtolower($user_email);
+$user[0]->password = getRandomPassword();
+$user[0]->firstname = 'Александр';
+$user[0]->lastname = 'Андреев';
+$user[0]->email = strtolower($user_email);
+$user[0]->auth = 'manual';
+$user[0]->timezone = 'Europe/Moscow';
+$user[0]->description = 'Автогенерация';
+$user[0]->city = 'Кемерово';
+$user[0]->country = 'RU';
+$user[0]->preferences = array(array('type' => 'auth_forcepasswordchange', 'value' => true));
+$users = $user;
 $params = array('users' => $users);
 
 /// REST CALL
@@ -64,7 +65,8 @@ $curl = new curl;
 $restformat = ($restformat == 'json') ? '&moodlewsrestformat=' . $restformat : '';
 $resp = $curl->post($serverurl . $restformat, $params);
 $resp_decode = json_decode($resp, false);
-print_r("<p>".$resp_decode->errorcode);
-print_r("<p>".$resp_decode->message);
-print_r("<p>".$user1->password);
+print_r("<p>".$resp);
+/*print_r("<p>".$resp_decode->errorcode);
+print_r("<p>".$resp_decode->message);*/
+print_r("<p>".$user[]->password);
 ?>
